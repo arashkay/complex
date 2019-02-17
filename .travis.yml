@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t arashkay/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run arashkay/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t arash/multi-client ./client
+  - docker build -t arash/multi-nginx ./nginx
+  - docker build -t arash/multi-server ./server
+  - docker build -t arash/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push arash/multi-client
+  - docker push arash/multi-nginx
+  - docker push arash/multi-server
+  - docker push arash/multi-worker
