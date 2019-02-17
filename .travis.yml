@@ -9,12 +9,12 @@ script:
   - docker run arashkay/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t arash/multi-client ./client
-  - docker build -t arash/multi-nginx ./nginx
-  - docker build -t arash/multi-server ./server
-  - docker build -t arash/multi-worker ./worker
+  - docker build -t arashkay/multi-client ./client
+  - docker build -t arashkay/multi-nginx ./nginx
+  - docker build -t arashkay/multi-server ./server
+  - docker build -t arashkay/multi-worker ./worker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push arash/multi-client
-  - docker push arash/multi-nginx
-  - docker push arash/multi-server
-  - docker push arash/multi-worker
+  - docker push arashkay/multi-client
+  - docker push arashkay/multi-nginx
+  - docker push arashkay/multi-server
+  - docker push arashkay/multi-worker
